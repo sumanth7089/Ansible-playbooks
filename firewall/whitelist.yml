@@ -1,0 +1,11 @@
+---
+- name: whitelist
+  hosts: web1
+  tasks:
+  - name: whitelist
+    firewalld:
+      source: 172.20.1.101
+      state: enabled
+      zone: internal
+      permanent: yes
+      immediate: yes

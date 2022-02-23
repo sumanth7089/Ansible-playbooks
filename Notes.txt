@@ -1,0 +1,1 @@
+ to create files -> ansible -i inventory -m setup web1 > /home/thor/playbooks/web/web-facts.txt

@@ -1,0 +1,30 @@
+---
+- hosts: web1
+  tasks:
+    - name: Create /tmp/testfile.txt
+      file:
+        path: /tmp/testfile.txt
+        state: touch
+
+- hosts: web2
+  tasks:
+    - name: Create /tmp/testfile.txt
+      file:
+        path: /tmp/testfile.txt
+        state: touch
+
+
+
+- name: create a file and set permisions
+  hosts: app
+  tasks: 
+  - name: create a file and set permission 
+    file:
+      path: app.txt
+      state: touch
+      mode: o=rw,g=r,o=r
+  - name: Changing file owner and group permissions
+    file:
+      path: app.txt
+      owner: "{{ ansible_user }}"
+      group: "{{ ansible_user }}"       

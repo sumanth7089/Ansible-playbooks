@@ -1,0 +1,13 @@
+---
+- name: install firewalld 
+  hosts: web1
+  tasks:
+  - name: install firewalld
+    yum:
+      name: firewalld
+      state: installed
+  - name: start service
+    service:
+      name: firewalld
+      state: started  
+      enabled: yes 

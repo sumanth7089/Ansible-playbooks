@@ -1,0 +1,13 @@
+---
+- hosts: web1
+  tasks: 
+  - firewalld:
+      source: 172.20.1.2
+      service: https
+      state: enabled
+      zone: internal
+      permanent: yes
+      immediate: yes
+  - service:
+      name: firewalld  
+      state: reloaded     

@@ -1,0 +1,7 @@
+---
+- hosts: web1
+  tasks:
+  - file: 
+      path: /opt/data/perm.txt
+      state: touch 
+      mode: 0640

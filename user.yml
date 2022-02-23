@@ -1,0 +1,7 @@
+---
+- name: creating a user
+  hosts: web1
+  tasks:
+  - name: creating a user
+    user: 
+      name: angel
