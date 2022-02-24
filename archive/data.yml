@@ -1,0 +1,11 @@
+---
+- hosts: web1
+  tasks:
+  - unarchive:
+      src: /root/data.tar.gz
+      dest: /srv
+      remote_src: yes
+  - file: path=/root/data.tar.gz state=absent
+
+  #Readme.md
+  # On web1 node we have an archive data.tar.gz under /root directory, extract it under /srv directory by developing a playbook ~/playbooks/data.yml and make sure data.tar.gz archive is removed after that.

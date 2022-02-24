@@ -1,0 +1,13 @@
+---
+- hosts: web1
+  tasks:
+  - archive:
+      path: 
+      - /root/file1.txt
+      - /usr/local/share/file2.txt
+      - /var/log/lastlog
+      dest: /root/files.tar.bz2
+      format: bz2
+
+#Readme.md
+# We have three files on web1 node /root/file1.txt, /usr/local/share/file2.txt and /var/log/lastlog. Create a bz2 archive of all these files and save it under /root directory, name the archive as files.tar.bz2. You can create ~/playbooks/files.yml playbook for it.      

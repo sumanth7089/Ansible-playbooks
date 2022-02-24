@@ -1,0 +1,6 @@
+---
+- hosts: node00
+  tasks: 
+  - cron:
+      name: Check Memory
+      state: absent

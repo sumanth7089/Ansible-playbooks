@@ -1,0 +1,9 @@
+---
+- hosts: web1
+  tasks:
+  - unarchive:
+      src: local.zip
+      dest: /tmp
+
+#Readme.md
+# On Ansible controller, we have a zip archive local.zip. We want to extract its contents on web1 under /tmp directory. Create a playbook local.yml under ~/playbooks directory to complete the task.

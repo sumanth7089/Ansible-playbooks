@@ -1,0 +1,14 @@
+---
+- hosts:
+  tasks:
+  - cron:
+      name: "cleanup"
+      special_time: reboot
+      job: "rm -rf /tmp/*"
+
+# Readme.md
+# Due to some disk space limitations, we want to cleanup the /tmp location on node00 host after every reboot. Create a playbook ~/playbooks/reboot.yml to add a cron named cleanup on node00 that will execute after every reboot and will clean /tmp location.
+
+
+
+# The command should be rm -rf /tmp/*.

@@ -1,0 +1,10 @@
+---
+- hosts: web1
+  tasks: 
+  - unarchive: 
+      src: https://github.com/kodekloudhub/Hello-World/archive/master.zip
+      dest: /root
+      remote_src: yes
+
+#Readme.md
+# Create a playbook download.yml under ~/playbooks directory to download and extract the https://github.com/kodekloudhub/Hello-World/archive/master.zip zip archive under /root directory on the web1 node.      

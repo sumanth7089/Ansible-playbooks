@@ -1,0 +1,24 @@
+---
+- hosts: node00
+  tasks:
+  - cron:
+      name: yum update
+      weekday: 0
+      hour: 8
+      minute: 05
+      user: root
+      job: yum -y update
+      cron_file: /etc/cron.d/ansible_yum
+
+# Readme.md
+# On node00 we want to keep the installed packages up to date, so we would like to run yum updates regularly. Create a playbook ~/playbooks/yum_update.yml and create a cron job as described below:
+
+# a. Do not add cron directly using crontab instead create a cron file /etc/cron.d/ansible_yum.
+
+# b. The cron must run on every Sunday at 8:05 am.
+
+# c. The name of the cron must be yum update.
+
+# d. Cron should be added for user root
+
+

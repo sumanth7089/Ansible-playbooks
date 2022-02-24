@@ -1,0 +1,14 @@
+#Create a playbook ~/playbooks/lastlog.yml to add a cron job Clear Lastlog on node00 to empty the /var/log/lastlog logs file. The job must run at 12am everyday.
+
+
+
+#You can use the command echo “” > /var/log/lastlog to empty the lastlog file and schedule should be 0 0 * * *.
+
+---
+- hosts: node00
+  tasks: 
+  - cron:
+     name: "Clear Lastlog"
+     minute: "0"
+     hour: "0"
+     job: echo ""  > /var/log/lastlog

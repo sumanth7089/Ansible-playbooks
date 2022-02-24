@@ -1,0 +1,29 @@
+---
+- name: Install and configure nginx on web1
+  hosts: web1
+  tasks:
+  - name: Install nginx
+    yum: name=nginx state=installed
+  - name: Start nginx
+    service: name=nginx state=started enabled=yes
+
+  - name: Extract nginx.zip
+    unarchive: src=/root/nginx.zip dest=/usr/share/nginx/html remote_src=yes
+
+  - name: Replace line in index.html
+    replace:
+     path: /usr/share/nginx/html/index.html
+     regexp: This is sample html code
+     replace: This is KodeKloud Ansible lab
+
+#Reademe.md
+# # We want to setup nginx on web1 node with some sample html code. Create a playbook ~/playbooks/nginx.yml to do so. Below are the details about the task:
+
+
+
+# a. Install nginx package and start/enable its service.
+
+# b. Extract /root/nginx.zip archive under /usr/share/nginx/html directory.
+
+# c. Inside /usr/share/nginx/html/index.html replace line This is sample html code with line This is KodeKloud Ansible lab.
+     
