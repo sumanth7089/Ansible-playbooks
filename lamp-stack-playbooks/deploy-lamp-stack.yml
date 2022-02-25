@@ -1,0 +1,89 @@
+---
+- name: installing common dependencies 
+  hosts: all
+  become: yes
+  tasks:
+  - name: installing dependencies 
+    yum:
+      name: libselinux-python, libsemanage-python, firewalld
+  - name: Copy the MySQL Configuration file
+    copy:
+      src: files/my.cnf
+      dest: /etc/my.cnf
+- name: MYSQL Database
+  hosts: lamp-db
+  become: yes
+  tasks:
+  - name: Install mysql packages
+    yum: 
+      name: mariadb-server, MySQL-python
+      state: installed 
+  - name:  Start and enable the mariadb/firewalld Service
+    service:
+      name: "{{ item }}"
+      state: started
+      enabled: yes
+    with_items:
+      - mariadb
+      - firewalld
+  - name:  Insert firewalld rule
+    firewalld: 
+      port: 3306/tcp
+      zone: public
+      state: enabled
+      permanent: yes
+      immediate: yes 
+  - name: Creating Application Database
+    mysql_db:
+      name: ecomdb 
+      state: present 
+  - name: Creating Application Database User
+    mysql_user:
+      host: 172.20.1.100
+      name: ecomuser
+      password: ecompassword
+      priv: '*.*:ALL'
+      state: present
+  - name: copy db file
+    copy:
+      src: db-load-script.sql
+      dest: /tmp 
+  - name: Load Inventory data by running the below shell command on the database server
+    shell: mysql -f < /tmp/db-load-script.sql
+- name: Webserver
+  hosts: lampweb
+  become: yes
+  tasks:
+  - name: Install web server
+    yum:   
+      name: httpd, php, php-mysql, git
+      state: installed 
+  - name: Start and enable the firewalld/httpd service
+    service:
+      name: "{{ item }}"
+      state: started 
+      enabled: yes
+    with_items: 
+      - httpd 
+      - firewalld 
+  - name: Insert firewalld rule for httpd
+    firewalld:
+      port: 80/tcp   
+      zone: public
+      state: enabled
+      permanent: yes
+      immediate: yes   
+  - name: Set index.php as the default page
+    replace: 
+      path: /etc/httpd/conf/httpd.conf
+      regexp: DirectoryIndex index.html
+      replace: DirectoryIndex index.php
+  - name:  Clone the source code from the repository
+    git:
+      repo:  https://github.com/kodekloudhub/learning-app-ecommerce.git
+      dest: /var/www/html
+      force: yes
+  - name: Copy the custom index.php file
+    copy:
+      src: files/index.php
+      dest: /var/www/html/index.php    
